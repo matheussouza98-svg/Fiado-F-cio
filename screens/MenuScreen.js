@@ -9,30 +9,24 @@ import {
   Pressable,
 } from "react-native";
 
-
 import { Ionicons } from "@expo/vector-icons";
 
+import ClientesScreen from "./ClientesScreen";
 
 export default function MenuScreen() {
   const [telaAtual, setTelaAtual] = useState("Home");
   const [menuAberto, setMenuAberto] = useState(true);
 
-
   const { width } = useWindowDimensions();
   const isMobile = width < 768;
-
 
   function navegar(tela) {
     setTelaAtual(tela);
     if (isMobile) setMenuAberto(false);
   }
 
-
-  // ✅ FUNÇÃO SEGURA (NÃO QUEBRA)
   function formatarMoeda(valor) {
     const numero = Number(valor) || 0;
-
-
     return (
       "R$ " +
       numero
@@ -42,7 +36,6 @@ export default function MenuScreen() {
     );
   }
 
-
   const devedores = [
     { nome: "João Silva", dias: "2 dias", valor: 1000 },
     { nome: "Maria Santos", dias: "5 dias", valor: 100 },
@@ -50,9 +43,7 @@ export default function MenuScreen() {
     { nome: "Paulo Henrique", dias: "1 semana", valor: 50 },
   ];
 
-
   const total = devedores.reduce((acc, item) => acc + item.valor, 0);
-
 
   return (
     <View style={styles.container}>
@@ -65,7 +56,6 @@ export default function MenuScreen() {
         onPress={() => setMenuAberto(false)}
       />
 
-
       {/* MENU */}
       <View
         style={[
@@ -73,32 +63,66 @@ export default function MenuScreen() {
           { display: menuAberto ? "flex" : "none" },
         ]}
       >
-
         <View style={styles.headerCard}>
           <Image source={require("../assets/logo.png")} style={styles.logo} />
           <View>
             <Text style={styles.title}>
-              Fiado{" "}
-              <Text style={{ color: "#16c05d" }}>
-                Fácil
-              </Text>
+              Fiado <Text style={{ color: "#16c05d" }}>Fácil</Text>
             </Text>
-
             <Text style={styles.subtitle}>
               Caderneta digital de fiado{"\n"}e vendas
             </Text>
           </View>
         </View>
 
-
         <ScrollView>
-          <MenuItem icon="home-outline" title="Home" description="Resumo e clientes devendo" active={telaAtual === "Home"} onPress={() => navegar("Home")} />
-          <MenuItem icon="people-outline" title="Clientes" description="Lista de todos os clientes" active={telaAtual === "ClientesScreen"} onPress={() => navegar("ClientesScreen")} />
-          <MenuItem icon="add-circle-outline" title="Nova Dívida" description="Adicionar nova venda fiado" active={telaAtual === "Nova Dívida"} onPress={() => navegar("Nova Dívida")} />
-          <MenuItem icon="card-outline" title="Pagamento" description="Registrar pagamento" active={telaAtual === "Pagamento"} onPress={() => navegar("Pagamento")} />
-          <MenuItem icon="bar-chart-outline" title="Relatórios" description="Resumo e estatísticas" active={telaAtual === "Relatórios"} onPress={() => navegar("Relatórios")} />
-          <MenuItem icon="settings-outline" title="Configurações" description="Ajustes do aplicativo" active={telaAtual === "Configurações"} onPress={() => navegar("Configurações")} />
+          <MenuItem
+            icon="home-outline"
+            title="Home"
+            description="Resumo e clientes devendo"
+            active={telaAtual === "Home"}
+            onPress={() => navegar("Home")}
+          />
 
+          <MenuItem
+            icon="people-outline"
+            title="Clientes"
+            description="Lista de todos os clientes"
+            active={telaAtual === "ClientesScreen"}
+            onPress={() => navegar("ClientesScreen")}
+          />
+
+          <MenuItem
+            icon="add-circle-outline"
+            title="Nova Dívida"
+            description="Adicionar nova venda fiado"
+            active={telaAtual === "Nova Dívida"}
+            onPress={() => navegar("Nova Dívida")}
+          />
+
+          <MenuItem
+            icon="card-outline"
+            title="Pagamento"
+            description="Registrar pagamento"
+            active={telaAtual === "Pagamento"}
+            onPress={() => navegar("Pagamento")}
+          />
+
+          <MenuItem
+            icon="bar-chart-outline"
+            title="Relatórios"
+            description="Resumo e estatísticas"
+            active={telaAtual === "Relatórios"}
+            onPress={() => navegar("Relatórios")}
+          />
+
+          <MenuItem
+            icon="settings-outline"
+            title="Configurações"
+            description="Ajustes do aplicativo"
+            active={telaAtual === "Configurações"}
+            onPress={() => navegar("Configurações")}
+          />
 
           {/* DICA */}
           <View style={styles.dicaMenu}>
@@ -108,7 +132,6 @@ export default function MenuScreen() {
                 <Text style={styles.dicaMenuTitulo}>DICA</Text>
               </View>
             </View>
-
 
             <View style={styles.dicaTextoRow}>
               <Text style={styles.dicaMenuTexto}>
@@ -121,7 +144,6 @@ export default function MenuScreen() {
         </ScrollView>
       </View>
 
-
       {/* CONTEÚDO */}
       <View style={styles.content}>
         <View style={styles.topBar}>
@@ -129,37 +151,30 @@ export default function MenuScreen() {
             <Ionicons name="menu" size={28} />
           </Pressable>
 
-
-          <Text style={styles.pageTitle}>{telaAtual}</Text>
+          <Text style={styles.pageTitle}>
+            {telaAtual === "ClientesScreen" ? "Clientes" : telaAtual}
+          </Text>
         </View>
 
-
-        {telaAtual === "Home" ? (
+        {/* HOME */}
+        {telaAtual === "Home" && (
           <ScrollView>
-            {/* CARD VERDE */}
             <View style={styles.homeCard}>
               <Text style={styles.ola}>Olá, Matheus! 👋</Text>
               <Text style={styles.resumo}>Resumo do seu fiado</Text>
 
-
               <View style={styles.saldoBox}>
                 <Text style={styles.saldoLabel}>Total a receber</Text>
-                <Text style={styles.saldo}>
-                  {formatarMoeda(total)}
-                </Text>
+                <Text style={styles.saldo}>{formatarMoeda(total)}</Text>
                 <Text style={styles.emAberto}>Em aberto</Text>
               </View>
             </View>
 
-
-            {/* DEVEDORES */}
             <View style={styles.devedoresContainer}>
               <Text style={styles.devedoresTitulo}>Quem está devendo</Text>
 
-
               {devedores.map((item, index) => {
                 const isVermelho = item.valor >= 500;
-
 
                 return (
                   <View key={index} style={styles.devedorItem}>
@@ -168,7 +183,6 @@ export default function MenuScreen() {
                       style={styles.devedorAvatar}
                     />
 
-
                     <View style={styles.devedorInfo}>
                       <View>
                         <Text style={styles.devedorNome}>{item.nome}</Text>
@@ -176,7 +190,6 @@ export default function MenuScreen() {
                           Última compra: {item.dias}
                         </Text>
                       </View>
-
 
                       <View style={styles.devedorDireita}>
                         <Text
@@ -188,7 +201,6 @@ export default function MenuScreen() {
                         >
                           {formatarMoeda(item.valor)}
                         </Text>
-
 
                         <Pressable
                           style={
@@ -213,16 +225,52 @@ export default function MenuScreen() {
                 );
               })}
 
-
-              {/* BOTÃO + */}
-              <Pressable style={styles.botaoAddGrande}>
+              <Pressable
+                style={styles.botaoAddGrande}
+                onPress={() => navegar("Nova Dívida")}
+              >
                 <Ionicons name="add" size={32} color="#fff" />
               </Pressable>
             </View>
           </ScrollView>
-        ) : (
-          <View style={styles.screenBox}>
-            <Text style={styles.homeTitle}>{telaAtual}</Text>
+        )}
+
+        {/* CLIENTES */}
+        {telaAtual === "ClientesScreen" && (
+          <ClientesScreen onNavegar={navegar} />
+        )}
+
+        {/* NOVA DÍVIDA */}
+        {telaAtual === "Nova Dívida" && (
+          <View style={styles.telaCentro}>
+            <Text style={styles.telaTitulo}>➕ Nova Dívida</Text>
+            <Text style={styles.telaSubtitulo}>
+              Tela em construção...
+            </Text>
+          </View>
+        )}
+
+        {/* PAGAMENTO */}
+        {telaAtual === "Pagamento" && (
+          <View style={styles.telaCentro}>
+            <Text style={styles.telaTitulo}>💳 Pagamento</Text>
+            <Text style={styles.telaSubtitulo}>Tela em construção...</Text>
+          </View>
+        )}
+
+        {/* RELATÓRIOS */}
+        {telaAtual === "Relatórios" && (
+          <View style={styles.telaCentro}>
+            <Text style={styles.telaTitulo}>📊 Relatórios</Text>
+            <Text style={styles.telaSubtitulo}>Tela em construção...</Text>
+          </View>
+        )}
+
+        {/* CONFIGURAÇÕES */}
+        {telaAtual === "Configurações" && (
+          <View style={styles.telaCentro}>
+            <Text style={styles.telaTitulo}>⚙️ Configurações</Text>
+            <Text style={styles.telaSubtitulo}>Tela em construção...</Text>
           </View>
         )}
       </View>
@@ -230,12 +278,13 @@ export default function MenuScreen() {
   );
 }
 
-
 function MenuItem({ icon, title, description, active, onPress }) {
   return (
-    <Pressable onPress={onPress} style={[styles.item, active && styles.activeItem]}>
+    <Pressable
+      onPress={onPress}
+      style={[styles.item, active && styles.activeItem]}
+    >
       <Ionicons name={icon} size={24} color={active ? "#16c05d" : "#555"} />
-
 
       <View style={{ marginLeft: 12 }}>
         <Text style={[styles.itemText, active && styles.activeText]}>
@@ -247,15 +296,13 @@ function MenuItem({ icon, title, description, active, onPress }) {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "row",
-    paddingTop: 20, // ✅ corrigido
+    paddingTop: 20,
     backgroundColor: "#f5f5f5",
   },
-
 
   overlay: {
     position: "absolute",
@@ -267,14 +314,12 @@ const styles = StyleSheet.create({
     zIndex: 9998,
   },
 
-
   sidebar: {
     width: 280,
     backgroundColor: "#fff",
     padding: 20,
     zIndex: 9999,
   },
-
 
   sidebarMobile: {
     position: "absolute",
@@ -288,12 +333,10 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
 
-
   content: {
     flex: 1,
     padding: 20,
   },
-
 
   topBar: {
     flexDirection: "row",
@@ -302,19 +345,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-
   pageTitle: {
     marginLeft: 10,
     fontSize: 22,
     fontWeight: "bold",
   },
 
-
   headerCard: {
     flexDirection: "row",
     marginBottom: 20,
   },
-
 
   logo: {
     width: 50,
@@ -322,18 +362,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 
-
   title: {
     fontWeight: "bold",
     fontSize: 18,
   },
 
-
   subtitle: {
     fontSize: 12,
     color: "#777",
   },
-
 
   item: {
     flexDirection: "row",
@@ -342,27 +379,22 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 
-
   activeItem: {
     backgroundColor: "#e8fff1",
   },
 
-
   itemText: {
     fontWeight: "bold",
   },
-
 
   itemDescription: {
     fontSize: 12,
     color: "#777",
   },
 
-
   activeText: {
     color: "#16c05d",
   },
-
 
   dicaMenu: {
     marginTop: 20,
@@ -371,31 +403,26 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-
   dicaHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
 
-
   dicaLeft: {
     flexDirection: "row",
     alignItems: "center",
   },
-
 
   emoji: {
     fontSize: 16,
     marginRight: 6,
   },
 
-
   dicaMenuTitulo: {
     color: "#16c05d",
     fontWeight: "bold",
   },
-
 
   dicaTextoRow: {
     flexDirection: "row",
@@ -404,7 +431,6 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
 
-
   dicaMenuTexto: {
     fontSize: 10,
     color: "#333",
@@ -412,24 +438,20 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
 
-
   homeCard: {
     backgroundColor: "#16c05d",
     padding: 20,
     borderRadius: 15,
   },
 
-
   ola: {
     color: "#fff",
     fontSize: 18,
   },
 
-
   resumo: {
     color: "#fff",
   },
-
 
   saldoBox: {
     marginTop: 15,
@@ -439,11 +461,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-
   saldoLabel: {
     color: "#fff",
   },
-
 
   saldo: {
     color: "#fff",
@@ -452,22 +472,18 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
 
-
   emAberto: {
     color: "#fff",
   },
-
 
   devedoresContainer: {
     marginTop: 20,
   },
 
-
   devedoresTitulo: {
     fontWeight: "bold",
     marginBottom: 10,
   },
-
 
   devedorItem: {
     flexDirection: "row",
@@ -477,7 +493,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-
   devedorAvatar: {
     width: 45,
     height: 45,
@@ -486,41 +501,34 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd",
   },
 
-
   devedorInfo: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
   },
 
-
   devedorNome: {
     fontWeight: "bold",
   },
-
 
   ultimaCompra: {
     fontSize: 12,
     color: "#777",
   },
 
-
   devedorDireita: {
     alignItems: "flex-end",
   },
-
 
   valorVermelho: {
     color: "red",
     fontWeight: "bold",
   },
 
-
   valorAmarelo: {
     color: "#f5b800",
     fontWeight: "bold",
   },
-
 
   botaoCobrarVermelho: {
     marginTop: 6,
@@ -531,7 +539,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 
-
   botaoCobrarAmarelo: {
     marginTop: 6,
     borderWidth: 1,
@@ -541,20 +548,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 
-
   textoCobrarVermelho: {
     color: "red",
     fontSize: 13,
     fontWeight: "bold",
   },
 
-
   textoCobrarAmarelo: {
     color: "#f5b800",
     fontSize: 13,
     fontWeight: "bold",
   },
-
 
   botaoAddGrande: {
     backgroundColor: "#16c05d",
@@ -567,17 +571,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-
-  screenBox: {
+  telaCentro: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
 
-
-  homeTitle: {
-    fontSize: 28,
+  telaTitulo: {
+    fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 10,
+  },
+
+  telaSubtitulo: {
+    fontSize: 14,
+    color: "#777",
   },
 });
-
