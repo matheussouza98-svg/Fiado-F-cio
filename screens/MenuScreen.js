@@ -93,7 +93,7 @@ export default function MenuScreen() {
 
         <ScrollView>
           <MenuItem icon="home-outline" title="Home" description="Resumo e clientes devendo" active={telaAtual === "Home"} onPress={() => navegar("Home")} />
-          <MenuItem icon="people-outline" title="Clientes" description="Lista de todos os clientes" active={telaAtual === "Clientes"} onPress={() => navegar("Clientes")} />
+          <MenuItem icon="people-outline" title="Clientes" description="Lista de todos os clientes" active={telaAtual === "ClientesScreen"} onPress={() => navegar("ClientesScreen")} />
           <MenuItem icon="add-circle-outline" title="Nova Dívida" description="Adicionar nova venda fiado" active={telaAtual === "Nova Dívida"} onPress={() => navegar("Nova Dívida")} />
           <MenuItem icon="card-outline" title="Pagamento" description="Registrar pagamento" active={telaAtual === "Pagamento"} onPress={() => navegar("Pagamento")} />
           <MenuItem icon="bar-chart-outline" title="Relatórios" description="Resumo e estatísticas" active={telaAtual === "Relatórios"} onPress={() => navegar("Relatórios")} />
@@ -401,12 +401,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
     justifyContent: "space-between",
-    marginTop: 6,
+    marginTop: 1,
   },
 
 
   dicaMenuTexto: {
-    fontSize: 12,
+    fontSize: 10,
     color: "#333",
     flex: 1,
     marginRight: 8,
